@@ -1,37 +1,73 @@
 
 ########
 # MOVE JAYHAWK WITH ARROWS, PRESS SPACEBAR TO QUIT
+# https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
 
-import sys, pygame
+import sys, pygame, time
 
 pygame.init()
 
-size = width, height = 600, 500
-black = 0,0,0
+size = width, height = (600, 500)
+black = (0,0,0)
+white = (255,255,255)
 
 screen = pygame.display.set_mode(size)
+gameExit = False;
+clock = pygame.time.Clock()
+FPS = 15
 
-jayhawk = pygame.image.load("jayhawk.png")
-jayhawk = pygame.transform.scale(jayhawk, (50, 50))
-jayrect = jayhawk.get_rect()
+smallFont = pygame.font.SysFont("comicsansms", 25)
+medFont = pygame.font.SysFont("comicsansms", 50)
+largeFont = pygame.font.SysFont("comicsansms", 100)
 
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:   # listens for pressing spacebar
-                pygame.quit()       # closes program and window
-                sys.exit()
-            if event.key == pygame.K_LEFT:
-                jayrect = jayrect.move(-20,0)
-            if event.key == pygame.K_RIGHT:
-                jayrect = jayrect.move(20,0)
-            if event.key == pygame.K_UP:
-                jayrect = jayrect.move(0, -20)
-            if event.key == pygame.K_DOWN:
-                jayrect = jayrect.move(0, 20)
-                
-    screen.fill(black)
-    screen.blit(jayhawk, jayrect)
-    pygame.display.update()
-    pygame.display.flip()
-    pygame.time.delay(100)
+def start_menu():
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit
+
+        screen.fill(white)
+        message_to_screen("Flappy JayHawks",
+                            black,
+                            -100,
+                            "large")
+        message_to_screen("By: Jeromy Tsai, Cammy Vo, Jesse Yang, Victor Berger",
+                            black,
+                            -20,
+                            "small")
+
+        pygame.display.update()
+        clock.tick(15)
+
+
+def text_objects(text, color, size):
+    if size == "small":
+        textSurface = smallFont.render(text, True, color)
+    elif size == "medium":
+        textSurface = medFont.render(text, True, color)
+    elif size == "large":
+        textSurface = largeFont.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
+def message_to_screen(msg, color, y_displace=0, size="small"):
+    textSurf, textRect = text_objects(msg, color, size)
+    textRect.center = ((width/2),(height/2)+y_displace)
+    screen.blit(textSurf,textRect)
+
+def gameLoop():
+    while not gameExit:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameExit = True
+        screen.fill(white)
+        pygame.display.update()
+
+        clock.tick(FPS)
+
+    pygame.quit()
+    sys.exit
+
+start_menu()
