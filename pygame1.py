@@ -13,7 +13,7 @@ black = (0,0,0)
 white = (255,255,255)
 
 screen = pygame.display.set_mode(size)
-gameExit = False;
+
 clock = pygame.time.Clock()
 FPS = 15
 
@@ -107,6 +107,7 @@ def message_to_screen(msg, color, y_displace=0, size="small"):
 
 def gameLoop():
     gameOver = False
+    gameExit = False;
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -125,35 +126,35 @@ def gameLoop():
         jayhawk = pygame.transform.scale(jayhawk, (50, 50))
         jayrect = jayhawk.get_rect()
 
-        while 1:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        jayrect = jayrect.move(-20,0)
-                    if event.key == pygame.K_RIGHT:
-                        jayrect = jayrect.move(20,0)
-                    if event.key == pygame.K_UP:
-                        jayrect = jayrect.move(0, -20)
-                    if event.key == pygame.K_DOWN:
-                        jayrect = jayrect.move(0, 20)
-                        
-            screen.fill((255, 231, 181))
+        
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    jayrect = jayrect.move(-20,0)
+                if event.key == pygame.K_RIGHT:
+                    jayrect = jayrect.move(20,0)
+                if event.key == pygame.K_UP:
+                    jayrect = jayrect.move(0, -20)
+                if event.key == pygame.K_DOWN:
+                    jayrect = jayrect.move(0, 20)
+                    
+        screen.fill((255, 231, 181))
 
-            #draw background
-            screen.blit(back, (x,height - bgHeight))
-            screen.blit(back2,(x + bgWidth,height - bgHeight))
-            screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
-            #make background scroll
-            bgdelay = bgdelay + 1
-            if(bgdelay % 2 == 1):
-                x = x - 1
-                if x == 0 - bgWidth:
-                    x = 0
-            
-            screen.blit(jayhawk, jayrect)
-            pygame.display.update()
-    #pygame.quit()
-    #sys.exit
+        #draw background
+        screen.blit(back, (x,height - bgHeight))
+        screen.blit(back2,(x + bgWidth,height - bgHeight))
+        screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+        #make background scroll
+        bgdelay = bgdelay + 1
+        if(bgdelay % 2 == 1):
+            x = x - 1
+            if x == 0 - bgWidth:
+                x = 0
+        
+        screen.blit(jayhawk, jayrect)
+        pygame.display.update()
+    pygame.quit()
+    sys.exit
 
 def main():
     """The application's entry point.
@@ -161,7 +162,7 @@ def main():
     If someone executes this module (instead of importing it, for
     example), this function is called.
     """
-    #start_menu()
+    start_menu()
     gameLoop()
 
 if __name__ == '__main__':
