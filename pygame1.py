@@ -105,7 +105,7 @@ def message_to_screen(msg, color, y_displace=0, size="small"):
     textRect.center = ((width/2),(height/2)+y_displace)
     screen.blit(textSurf,textRect)
 def pipe_collisions(bird,pipes):
-	return bird.colliderect(pipes))
+	return bird.colliderect(pipes)
 def gameLoop():
     gameOver = False
     gameExit = False
