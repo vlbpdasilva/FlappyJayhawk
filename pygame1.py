@@ -104,10 +104,12 @@ def message_to_screen(msg, color, y_displace=0, size="small"):
     textSurf, textRect = text_objects(msg, color, size)
     textRect.center = ((width/2),(height/2)+y_displace)
     screen.blit(textSurf,textRect)
-
+def pipe_collisions(bird,pipes):
+	return bird.colliderect(pipes))
 def gameLoop():
     gameOver = False
-    gameExit = False;
+    gameExit = False
+    showGameOver = False
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -126,7 +128,12 @@ def gameLoop():
         jayhawk = pygame.transform.scale(jayhawk, (50, 50))
         jayrect = jayhawk.get_rect()
 
-        
+        #random pipe declaration
+        pip = images['pipe']
+        pip = pygame.transform.scale(pip, (50, 100))
+        piprect = pip.get_rect()
+        piprect = piprect.move(65,0)
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -138,6 +145,10 @@ def gameLoop():
                 if event.key == pygame.K_DOWN:
                     jayrect = jayrect.move(0, 20)
                     
+        #pipe
+        if (pipe_collisions(jayrect,piprect)):
+            showGameOver = True
+
         screen.fill((255, 231, 181))
 
         #draw background
@@ -150,8 +161,13 @@ def gameLoop():
             x = x - 1
             if x == 0 - bgWidth:
                 x = 0
-        
+		#draw pipe
+        screen.blit(pip, piprect)        
+		#draw jayhawk
         screen.blit(jayhawk, jayrect)
+        if showGameOver:
+            youlost = largeFont.render("Game Over!",1,black)
+            screen.blit(youlost,(100,100))
         pygame.display.update()
     pygame.quit()
     sys.exit
