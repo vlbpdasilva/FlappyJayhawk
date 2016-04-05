@@ -188,7 +188,7 @@ def gameLoop():
                     
         #pipe
         if (pipe_collisions(jayrect,piprect)):
-            showGameOver = True
+            gameOver = True
 
         screen.fill((255, 231, 181))
 
@@ -206,11 +206,34 @@ def gameLoop():
         screen.blit(pip, piprect)        
 		#draw jayhawk
         screen.blit(jayhawk, jayrect)
-        if showGameOver:
+        while gameOver == True:
+            screen.blit(back, (x,height - bgHeight))
+            screen.blit(back2,(x + bgWidth,height - bgHeight))
+            screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+            #make background scroll
+            bgdelay = bgdelay + 1
+            if(bgdelay % 2 == 1):
+                x = x - 1
+                if x == 0 - bgWidth:
+                    x = 0
             message_to_screen("Game Over",
                             blue,
-                            0,
+                            -50,
                             "large")
+            message_to_screen("Press c to play again",
+                            blue,
+                            50,
+                            "small")
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameOver = False
+                    gameExit = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_c:
+                        gameLoop()
+
+
         pygame.display.update()
     
 
@@ -227,10 +250,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
-        
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_C:
-                    gameLoop()
     pygame.quit()
     sys.exit
 
