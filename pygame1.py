@@ -138,30 +138,30 @@ def gameLoop():
     showGameOver = False
     x = 0
     bgdelay = 0
+    images = load_images();
+
+    #scrolling background declaration
+    back = images['background']
+    back2 = images['background']
+    back3 = images['background']
+    bgWidth, bgHeight = back.get_size()
+    
+
+    jayhawk = images['jayhawk']
+    jayhawk = pygame.transform.scale(jayhawk, (50, 50))
+    jayrect = jayhawk.get_rect()
+
+    #random pipe declaration
+    pip = images['pipe']
+    pip = pygame.transform.scale(pip, (50, 100))
+    piprect = pip.get_rect()
+    piprect = piprect.move(65,0)
+
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
-        images = load_images();
-
-        #scrolling background declaration
-        back = images['background']
-        back2 = images['background']
-        back3 = images['background']
-        bgWidth, bgHeight = back.get_size()
-        
-
-        jayhawk = images['jayhawk']
-        jayhawk = pygame.transform.scale(jayhawk, (50, 50))
-        jayrect = jayhawk.get_rect()
-
-        #random pipe declaration
-        pip = images['pipe']
-        pip = pygame.transform.scale(pip, (50, 100))
-        piprect = pip.get_rect()
-        piprect = piprect.move(65,0)
-
-        for event in pygame.event.get():
+    
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     jayrect = jayrect.move(-20,0)
@@ -196,8 +196,7 @@ def gameLoop():
             youlost = largeFont.render("Game Over!",1,black)
             screen.blit(youlost,(100,100))
         pygame.display.update()
-    pygame.quit()
-    sys.exit
+    
 
 def main():
     """The application's entry point.
@@ -205,8 +204,20 @@ def main():
     If someone executes this module (instead of importing it, for
     example), this function is called.
     """
+    gameExit = False
     start_menu()
     gameLoop()
+    while not gameExit:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameExit = True
+        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_C:
+                    gameLoop()
+    pygame.quit()
+    sys.exit
+
 
 if __name__ == '__main__':
     # If this module had been imported, __name__ would be 'pygame1'.
