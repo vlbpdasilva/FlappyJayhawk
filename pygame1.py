@@ -108,7 +108,7 @@ class Pipe(pygame.sprite.Sprite):
 
     def scroll(self):
         self.x = self.x - 1
-        if(self.x + 50 == 0):
+        if(self.x + 600 == 0):
             self.x = self.reset_x
             self.y = randint(25, 375)
             return False
@@ -259,7 +259,7 @@ def main():
             if x == 0 - bgWidth:
                 x = 0
 
-        #add pipes every 3 seconds
+        #add pipes every 2 seconds
         delayBeforeNextPipeIncr = delayBeforeNextPipeIncr + 1
         if(delayBeforeNextPipeIncr > delayBeforeNextPipe):
             pipe1 = Pipe(images['pipe'], width)
