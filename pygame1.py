@@ -11,6 +11,9 @@ pygame.init()
 size = width, height = (600, 500)
 black = (0,0,0)
 white = (255,255,255)
+blue = (0, 0, 255)
+red = (255, 0, 0)
+
 
 screen = pygame.display.set_mode(size)
 
@@ -63,7 +66,8 @@ def load_images():
 
 def start_menu():
     intro = True
-
+    x = 0
+    bgdelay = 0
     while intro:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -73,22 +77,42 @@ def start_menu():
                 if event.key == pygame.K_SPACE:
                     intro = False
 
-        screen.fill(white)
+        images = load_images();
+
+        #scrolling background declaration
+        back = images['background']
+        back2 = images['background']
+        back3 = images['background']
+        bgWidth, bgHeight = back.get_size()
+
+        screen.fill((255, 231, 181))
+
+        #draw background
+        screen.blit(back, (x,height - bgHeight))
+        screen.blit(back2,(x + bgWidth,height - bgHeight))
+        screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+        #make background scroll
+        bgdelay = bgdelay + 1
+        if(bgdelay % 2 == 1):
+            x = x - 1
+            if x == 0 - bgWidth:
+                x = 0
+
         message_to_screen("Flappy JayHawks",
-                            black,
+                            blue,
                             -100,
                             "large")
         message_to_screen("By: Jeromy Tsai, Cammy Vo, Jesse Yang, Victor Berger",
-                            black,
+                            blue,
                             -20,
                             "small")
         message_to_screen("Press SPACE to play!!",
-                            black,
+                            red,
                             20,
                             "medium")
 
         pygame.display.update()
-        clock.tick(15)
+        
 
 
 def text_objects(text, color, size):
@@ -104,12 +128,16 @@ def message_to_screen(msg, color, y_displace=0, size="small"):
     textSurf, textRect = text_objects(msg, color, size)
     textRect.center = ((width/2),(height/2)+y_displace)
     screen.blit(textSurf,textRect)
+
 def pipe_collisions(bird,pipes):
 	return bird.colliderect(pipes)
+
 def gameLoop():
     gameOver = False
     gameExit = False
     showGameOver = False
+    x = 0
+    bgdelay = 0
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -121,8 +149,7 @@ def gameLoop():
         back2 = images['background']
         back3 = images['background']
         bgWidth, bgHeight = back.get_size()
-        x = 0
-        bgdelay = 0
+        
 
         jayhawk = images['jayhawk']
         jayhawk = pygame.transform.scale(jayhawk, (50, 50))
