@@ -113,6 +113,18 @@ def start_menu():
 
         pygame.display.update()
         
+def game_over():
+    
+
+    while 1:
+        message_to_screen("Game Over",
+                            blue,
+                            0,
+                            "large")
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit
 
 
 def text_objects(text, color, size):
@@ -161,7 +173,9 @@ def gameLoop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
-    
+                pygame.quit()
+                sys.exit
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     jayrect = jayrect.move(-20,0)
@@ -193,8 +207,10 @@ def gameLoop():
 		#draw jayhawk
         screen.blit(jayhawk, jayrect)
         if showGameOver:
-            youlost = largeFont.render("Game Over!",1,black)
-            screen.blit(youlost,(100,100))
+            message_to_screen("Game Over",
+                            blue,
+                            0,
+                            "large")
         pygame.display.update()
     
 
