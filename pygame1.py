@@ -65,7 +65,6 @@ class Jayhawk(pygame.sprite.Sprite):
     @property
     def rect(self):
         """Get the bird's position, width, and height, as a pygame.Rect.
-
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y, 25, 25)
 
@@ -98,7 +97,7 @@ class Pipe(pygame.sprite.Sprite):
         super(Pipe, self).__init__()
         self.x = game_window_width
         self.reset_x = game_window_width
-        self.y = 25
+        self.y = randint(25, 375)
 
         self.Pipe_image_top = image
         self.Pipe_image_top = pygame.transform.rotate(self.Pipe_image_top, 180)
@@ -112,6 +111,8 @@ class Pipe(pygame.sprite.Sprite):
         if(self.x + 50 == 0):
             self.x = self.reset_x
             self.y = randint(25, 375)
+            return False
+        return True
     
     @property
     def image_top(self):
@@ -133,7 +134,6 @@ class Pipe(pygame.sprite.Sprite):
     @property
     def rect_top(self):
         """Get the bird's position, width, and height, as a pygame.Rect.
-
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y - 504, 25, 25)#pipe's img height is 504
 
@@ -157,7 +157,6 @@ class Pipe(pygame.sprite.Sprite):
     @property
     def rect_bot(self):
         """Get the bird's position, width, and height, as a pygame.Rect.
-
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y + 100, 25, 25)
         
@@ -222,8 +221,12 @@ def main():
     bgdelay = 0
 
     #scrolling pipe declaration
-    pipe = Pipe(images['pipe'], width)
-    #piperect = pipe.rect #this is updated by calling scroll and then calling pipe's rect property
+    pipe = Pipe(images['pipe'], width)    #piperect = pipe.rect #this is updated by calling scroll and then calling pipe's rect property
+    pipeList = []
+    pipeList.append(pipe)
+    #add pipes every 2 seconds
+    delayBeforeNextPipe = 286 #(1000 / pygame.time.delay(n)) * 2
+    delayBeforeNextPipeIncr = 0;
 
     jayhawk = Jayhawk(0,0,(50,50), images['jayhawk'])
     jayrect = jayhawk.rect
@@ -256,11 +259,19 @@ def main():
             if x == 0 - bgWidth:
                 x = 0
 
+        #add pipes every 3 seconds
+        delayBeforeNextPipeIncr = delayBeforeNextPipeIncr + 1
+        if(delayBeforeNextPipeIncr > delayBeforeNextPipe):
+            pipe1 = Pipe(images['pipe'], width)
+            pipeList.append(pipe1)
+            delayBeforeNextPipeIncr = 0
         #draw pipe
-        screen.blit(pipe.image_top, pipe.rect_top)
-        screen.blit(pipe.image_bot, pipe.rect_bot)
-        #make pipe scroll
-        pipe.scroll()
+        for pipeElement in pipeList:
+            screen.blit(pipeElement.image_top, pipeElement.rect_top)
+            screen.blit(pipeElement.image_bot, pipeElement.rect_bot)
+            #make pipe scroll
+            if(pipeElement.scroll() == False):
+                pipeList.pop(0)
         
         screen.blit(jayhawk.image, jayrect)
         pygame.display.update()
