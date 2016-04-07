@@ -215,6 +215,8 @@ class Pipe(pygame.sprite.Sprite):
 
     def scroll(self):
         """Update the Pipe's position by changing its x-coord by -1.
+        Get whether the pipe has hit the boundary -600 and stopped scrolling (and reset).
+        When stopped scrolling, this should be the signal to pop the pipe off the pipeList.
         """
         self.x = self.x - 1
         if(self.x + 600 == 0):
@@ -282,6 +284,8 @@ class Background(pygame.sprite.Sprite):
 
     def scroll(self):
         """Update the Background's position by changing its x-coord by -1.
+        Reset position of Background image's rects back to 0 when the first rect is fully offscreen.
+        This gives the illusion of infinitely repeating background.
         """
         self.BackgroundDelay = self.BackgroundDelay + 1
         if(self.BackgroundDelay % 2 == 1):
