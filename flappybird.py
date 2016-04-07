@@ -57,8 +57,11 @@ def load_images():
 
 def start_menu():
     intro = True
-    x = 0
-    bgdelay = 0
+
+    images = load_images();
+    #scrolling background declaration
+    back = Background(images['background'], images['background'].get_size(), height)
+    
     while intro:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -68,26 +71,14 @@ def start_menu():
                 if event.key == pygame.K_SPACE:
                     intro = False
 
-        images = load_images();
-
-        #scrolling background declaration
-        back = images['background']
-        back2 = images['background']
-        back3 = images['background']
-        bgWidth, bgHeight = back.get_size()
-
         screen.fill((255, 231, 181))
 
         #draw background
-        screen.blit(back, (x,height - bgHeight))
-        screen.blit(back2,(x + bgWidth,height - bgHeight))
-        screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+        screen.blit(back.image, back.rect)
+        screen.blit(back.image, back.rect2)
+        screen.blit(back.image, back.rect3)
         #make background scroll
-        bgdelay = bgdelay + 1
-        if(bgdelay % 2 == 1):
-            x = x - 1
-            if x == 0 - bgWidth:
-                x = 0
+        back.scroll()
 
         message_to_screen("Flappy JayHawks",
                             blue,
@@ -223,6 +214,8 @@ class Pipe(pygame.sprite.Sprite):
 
 
     def scroll(self):
+        """Update the Pipe's position by changing its x-coord by -1.
+        """
         self.x = self.x - 1
         if(self.x + 600 == 0):
             self.x = self.reset_x
@@ -268,6 +261,61 @@ class Pipe(pygame.sprite.Sprite):
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y + 100, 25, 25)
 
+class Background(pygame.sprite.Sprite):
+    """The background image that will scroll at a relatively slow pace.
+    The image will repeat every image width's length apart.
+    """
+
+    def __init__(self, image, size, windowHeight):
+        """Initialise a new Background instance.
+            Arguments:
+            image: The Background image.
+        size: the size of the background image.
+        windowHeight: used to align the background with the bottom of the window.
+        """
+        super(Background, self).__init__()
+        self.x = 0
+        self.BackgroundDelay = 0
+        self.Background_image = image
+        self.BackgroundWidth, self.BackgroundHeight = size
+        self.y = windowHeight - self.BackgroundHeight
+
+    def scroll(self):
+        """Update the Background's position by changing its x-coord by -1.
+        """
+        self.BackgroundDelay = self.BackgroundDelay + 1
+        if(self.BackgroundDelay % 2 == 1):
+            self.x = self.x - 1
+            if self.x == 0 - self.BackgroundWidth:
+                self.x = 0
+
+    @property
+    def image(self):
+        """Get a Surface containing the Background's image.
+        """
+        return self.Background_image
+
+    @property
+    def rect(self):
+        """Get the background's 1st position, width, and height, as a pygame.Rect.
+            THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
+        return pygame.Rect(self.x, self.y, 25, 25)
+
+    @property
+    def rect2(self):
+        """Get the background's 2nd position, width, and height, as a pygame.Rect.
+        This will be the same image repeated at BackgroundWidth pixels after.
+            THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
+        return pygame.Rect(self.x + self.BackgroundWidth, self.y, 25, 25)
+
+    @property
+    def rect3(self):
+        """Get the background's 3rd position, width, and height, as a pygame.Rect.
+        This will be the same image repeated at BackgroundWidth + BackgroundWidth pixels after.
+            THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
+        return pygame.Rect(self.x + self.BackgroundWidth + self.BackgroundWidth, self.y, 25, 25)
+
+
 def pipe_collisions(bird,pipes):
     #notes for myself
     #Screen is (600, 500)
@@ -279,7 +327,7 @@ def pipe_collisions(bird,pipes):
         return True
     
     return bird.colliderect(pipes)
-	
+    
 def pipe_collisions_bot(bird,pipes):
  
     #if bird.y > (96 + pipes.y) and (bird.x+45 > pipes.x and bird.x-35 < pipes.x):
@@ -295,12 +343,7 @@ def gameLoop():
     images = load_images();
 
     #scrolling background declaration
-    back = images['background']
-    back2 = images['background']
-    back3 = images['background']
-    bgWidth, bgHeight = back.get_size()
-    x = 0
-    bgdelay = 0
+    back = Background(images['background'], images['background'].get_size(), height)
 
     #scrolling pipe declaration
     pipe = Pipe(images['pipe'], width)    #piperect = pipe.rect #this is updated by calling scroll and then calling pipe's rect property
@@ -396,18 +439,14 @@ def gameLoop():
         screen.fill((255, 231, 181))
 
         #draw background
-        screen.blit(back, (x,height - bgHeight))
-        screen.blit(back2,(x + bgWidth,height - bgHeight))
-        screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+        screen.blit(back.image, back.rect)
+        screen.blit(back.image, back.rect2)
+        screen.blit(back.image, back.rect3)
         #make background scroll
-        bgdelay = bgdelay + 1
-        if(bgdelay % 2 == 1):
-            x = x - 1
-            if x == 0 - bgWidth:
-                x = 0
-	#draw pipe for testing
+        back.scroll()
+    #draw pipe for testing
         #screen.blit(pip, piprect)        
-	
+    
         #add pipes every 2 seconds
         delayBeforeNextPipeIncr = delayBeforeNextPipeIncr + 1
         if(delayBeforeNextPipeIncr > delayBeforeNextPipe):
@@ -436,15 +475,12 @@ def gameLoop():
 
             
         while gameOver == True:
-            screen.blit(back, (x,height - bgHeight))
-            screen.blit(back2,(x + bgWidth,height - bgHeight))
-            screen.blit(back3,(x + bgWidth + bgWidth,height - bgHeight))
+            #draw background
+            screen.blit(back.image, back.rect)
+            screen.blit(back.image, back.rect2)
+            screen.blit(back.image, back.rect3)
             #make background scroll
-            bgdelay = bgdelay + 1
-            if(bgdelay % 2 == 1):
-                x = x - 1
-                if x == 0 - bgWidth:
-                    x = 0
+            back.scroll()
             message_to_screen("Game Over",
                             blue,
                             -50,
@@ -479,7 +515,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
-				
+                
     pygame.quit()
     quit()
     sys.exit
