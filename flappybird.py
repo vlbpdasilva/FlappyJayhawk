@@ -1,4 +1,3 @@
-
 ########
 # MOVE JAYHAWK WITH ARROWS, PRESS SPACEBAR TO QUIT
 # https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
@@ -27,26 +26,17 @@ largeFont = pygame.font.SysFont("comicsansms", 100)
 
 def load_images():
     """Load all images required by the game and return a dict of them.
-
     The returned dict has the following keys:
+    jayhawk: The image of the Jayhawk bird.
     background: The game's background image.
-    bird-wingup: An image of the bird with its wing pointing upward.
-        Use this and bird-wingdown to create a flapping bird.
-    bird-wingdown: An image of the bird with its wing pointing downward.
-        Use this and bird-wingup to create a flapping bird.
-    pipe-end: An image of a pipe's end piece (the slightly wider bit).
-        Use this and pipe-body to make pipes.
-    pipe-body: An image of a slice of a pipe's body.  Use this and
-        pipe-body to make pipes.
+    pipe: The image of the pipe (a 540px image extending both end-piece and body).
     """
 
     def load_image(img_file_name):
         """Return the loaded pygame image with the specified file name.
-
         This function looks for images in the game's images folder
         (./images/).  All images are converted before being returned to
         speed up blitting.
-
         Arguments:
         img_file_name: The file name (including its extension, e.g.
             '.png') of the required image, without a file path.
@@ -175,6 +165,7 @@ class Jayhawk(pygame.sprite.Sprite):
         x: The Jayhawk's initial X coordinate.
         y: The Jayhawk's initial Y coordinate.
         scale: The Jayhawk's size multiplier.
+        image: The Jayhawk's image.
         """
         super(Jayhawk, self).__init__()
         self.x = x
@@ -185,11 +176,7 @@ class Jayhawk(pygame.sprite.Sprite):
 
     @property
     def image(self):
-        """Get a Surface containing this bird's image.
-        This will decide whether to return an image where the bird's
-        visible wing is pointing upward or where it is pointing downward
-        based on pygame.time.get_ticks().  This will animate the flapping
-        bird, even though pygame doesn't support animated GIFs.
+        """Get a Surface containing this Jayhawk's image.
         """
         return self.Jayhawk_image
 
@@ -207,29 +194,17 @@ class Jayhawk(pygame.sprite.Sprite):
         return pygame.Rect(self.x, self.y, 25, 25)
     
 class Pipe(pygame.sprite.Sprite):
-    """
-    x: The bird's X coordinate.
-    y: The bird's Y coordinate.
-    msec_to_climb: The number of milliseconds left to climb, where a
-        complete climb lasts Bird.CLIMB_DURATION milliseconds.
-    Constants:
-    WIDTH: The width, in pixels, of the bird's image.
-    HEIGHT: The height, in pixels, of the bird's image.
-    SINK_SPEED: With which speed, in pixels per millisecond, the bird
-        descends in one second while not climbing.
-    CLIMB_SPEED: With which speed, in pixels per millisecond, the bird
-        ascends in one second while climbing, on average.  See also the
-        Bird.update docstring.
-    CLIMB_DURATION: The number of milliseconds it takes the bird to
-        execute a complete climb.
+    """The pipe is the main obstacle in this game. Pipes will occur as pairs
+    with a top pipe and a bottom pipe. The Jayhawk fly through the middle
+    of these pipes in order to proceed or suffer damage/lose the game.
     """
     
     def __init__(self, image, game_window_width):
-        """Initialise a new Jayhawk instance.
+        """Initialise a new Pipe instance.
         Arguments:
-        x: The Jayhawk's initial X coordinate.
-        y: The Jayhawk's initial Y coordinate.
-        scale: The Jayhawk's size multiplier.
+        image: The Pipe's image. This will be duplicated for both top and
+                bottom pipes for the pipe pair.
+        game_window_width: The position at which new pipes spawn.
         """
         super(Pipe, self).__init__()
         self.x = game_window_width
@@ -257,11 +232,7 @@ class Pipe(pygame.sprite.Sprite):
     
     @property
     def image_top(self):
-        """Get a Surface containing this bird's image.
-        This will decide whether to return an image where the bird's
-        visible wing is pointing upward or where it is pointing downward
-        based on pygame.time.get_ticks().  This will animate the flapping
-        bird, even though pygame doesn't support animated GIFs.
+        """Get a Surface containing the top pipe's image.
         """
         return self.Pipe_image_top
 
@@ -274,17 +245,13 @@ class Pipe(pygame.sprite.Sprite):
 
     @property
     def rect_top(self):
-        """Get the bird's position, width, and height, as a pygame.Rect.
+        """Get the top pipe's position, width, and height, as a pygame.Rect.
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y - 504, 25, 25)#pipe's img height is 504
 
     @property
     def image_bot(self):
-        """Get a Surface containing this bird's image.
-        This will decide whether to return an image where the bird's
-        visible wing is pointing upward or where it is pointing downward
-        based on pygame.time.get_ticks().  This will animate the flapping
-        bird, even though pygame doesn't support animated GIFs.
+        """Get a Surface containing the bot pipe's image.
         """
         return self.Pipe_image_bot
 
@@ -297,7 +264,7 @@ class Pipe(pygame.sprite.Sprite):
 
     @property
     def rect_bot(self):
-        """Get the bird's position, width, and height, as a pygame.Rect.
+        """Get the bot pipe's position, width, and height, as a pygame.Rect.
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x, self.y + 100, 25, 25)
 
@@ -502,7 +469,6 @@ def gameLoop():
 
 def main():
     """The application's entry point.
-
     If someone executes this module (instead of importing it, for
     example), this function is called.
     """
@@ -523,4 +489,3 @@ if __name__ == '__main__':
     # If this module had been imported, __name__ would be 'pygame1'.
     # It was executed (e.g. by double-clicking the file), so call main.
     main()
-
