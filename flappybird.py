@@ -99,6 +99,7 @@ def start_menu():
                             "medium")
 
         pygame.display.update()
+        pygame.time.delay(7)
         
 def game_over():
     """
@@ -289,7 +290,7 @@ class Pipe(pygame.sprite.Sprite):
     def rect_bot(self):
         """Get the bot pipe's position, width, and height, as a pygame.Rect.
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
-        return pygame.Rect(self.x, self.y + 100, 25, 25)
+        return pygame.Rect(self.x, self.y + 200, 25, 25)
 
 class Background(pygame.sprite.Sprite):
     """The background image that will scroll at a relatively slow pace.
@@ -391,7 +392,7 @@ def gameLoop():
     
     #jayhawk
     jayhawk = images['jayhawk']
-    jayhawk = pygame.transform.scale(jayhawk, (50, 50))
+    jayhawk = pygame.transform.scale(jayhawk, (60, 60))
     jayrect = jayhawk.get_rect()
     jayrect = jayrect.move(80, 200)
 
@@ -424,13 +425,9 @@ def gameLoop():
                     sys.exit
                 if event.key == pygame.K_UP:
                     isGoingUp = True
-                if event.key == pygame.K_LEFT:
-                    jayrect = jayrect.move(-20,0)
-                if event.key == pygame.K_RIGHT:
-                    jayrect = jayrect.move(20,0)
                     
         if(isGoingUp):
-            jayrect = jayrect.move(0, (up_speed / 3))
+            jayrect = jayrect.move(0, (up_speed / 2))
             #print(up_counter , up_speed)
             up_counter += 1
             down_counter = 0        
@@ -451,7 +448,7 @@ def gameLoop():
                 up_counter = 0
                 up_speed = -22            
         else:
-            jayrect = jayrect.move(0, (down_speed)/3)
+            jayrect = jayrect.move(0, (down_speed)/8)
             #print(down_counter, down_speed)
             down_counter += 1
             up_counter = 0
@@ -526,6 +523,7 @@ def gameLoop():
                             50,
                             "small")
             pygame.display.update()
+            pygame.time.delay(7)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameOver = False
@@ -533,6 +531,10 @@ def gameLoop():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_c:
                         gameLoop()
+                    if event.key == pygame.K_ESCAPE:
+                        gameExit = True
+                        pygame.quit()
+                        sys.exit
         
 
         pygame.display.update()
