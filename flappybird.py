@@ -89,7 +89,7 @@ def start_menu():
                             -20,
                             "small")
         message_to_screen("Press SPACE to play!!",
-                            red,
+                            red,_
                             20,
                             "medium")
 
@@ -320,8 +320,8 @@ class Background(pygame.sprite.Sprite):
         return pygame.Rect(self.x + self.BackgroundWidth + self.BackgroundWidth, self.y, 25, 25)
 
 
-def pipe_collisions(bird,pipes):
-    #notes for myself
+def pipe_collisions_top(bird,pipes):
+    #notes
     #Screen is (600, 500)
     #Upper right is (600,0)
     #Lower left is (0,500)
@@ -335,7 +335,7 @@ def pipe_collisions(bird,pipes):
 def pipe_collisions_bot(bird,pipes):
  
     #if bird.y > (96 + pipes.y) and (bird.x+45 > pipes.x and bird.x-35 < pipes.x):
-    if bird.y > (76 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
+    if bird.y > (96 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
     return bird.colliderect(pipes)
     
@@ -472,9 +472,9 @@ def gameLoop():
         for pipeElement in pipeList:
             botPipeRect = pipeElement.rect_bot
             topPipeRect = pipeElement.rect_top
-            if (pipe_collisions(jayrect,topPipeRect)):
+            if (pipe_collisions_top(jayrect,topPipeRect)):
                 gameOver = True
-            if (pipe_collisions(jayrect,botPipeRect)):
+            if (pipe_collisions_bot(jayrect,botPipeRect)):
                 gameOver = True
 
             
