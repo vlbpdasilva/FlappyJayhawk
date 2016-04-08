@@ -21,9 +21,9 @@ red = (255, 0, 0)
 clock = pygame.time.Clock()
 FPS = 15
 
-smallFont = pygame.font.SysFont("comicsansms", 25)
-medFont = pygame.font.SysFont("comicsansms", 50)
-largeFont = pygame.font.SysFont("comicsansms", 100)
+smallFont = pygame.font.SysFont("comicsansms", 14)
+medFont = pygame.font.SysFont("comicsansms", 25)
+largeFont = pygame.font.SysFont("comicsansms", 50)
 
 def load_images():
     """Load all images required by the game and return a dict of them.
