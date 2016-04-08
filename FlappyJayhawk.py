@@ -13,15 +13,11 @@ or Escape to close the game.
 Sources used:_____________________
 
 Official Pygame documentation: http://www.pygame.org/docs/
-
-Youtube video available at https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
-
+Youtube videos available at https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
 Pipe image from http://vignette3.wikia.nocookie.net/fantendo/images/0/06/RocketPipes.png/revision/latest?cb=20100430132034
-
+Background obtained from https://peukalo.wordpress.com/tag/super-mario/
 Github repository used for help with Pygame implementations: https://github.com/TimoWilken/flappy-bird-pygame
-
 Pygame clock documentation: http://www.geon.wz.cz/pygame/ref/pygame_time.html
-
 Python documentation regarding classes: https://docs.python.org/2/tutorial/classes.html
 
 """
