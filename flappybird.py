@@ -1,8 +1,30 @@
+"""
+EECS 448 - "Flappy Jayhawk" -- Project 3
+@author Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
+prof: John Gibbons
+University of Kansas
+code freeze: April 8th, 2016 - 11:59 pm
+ 
+Basic controls:
+From the menu, press the spacebar to start game. Use the up arrow to control the Jayhawk up.
+Hitting one of the moving blocks causes you to lose. Then, the user can press 'c' to restart 
+or Escape to close the game.
 
-########
-# MOVE JAYHAWK WITH ARROWS, PRESS SPACEBAR TO QUIT
-# https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
-#pipe image from http://vignette3.wikia.nocookie.net/fantendo/images/0/06/RocketPipes.png/revision/latest?cb=20100430132034
+Sources used:_____________________
+
+Official Pygame documentation: http://www.pygame.org/docs/
+
+Youtube video available at https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
+
+Pipe image from http://vignette3.wikia.nocookie.net/fantendo/images/0/06/RocketPipes.png/revision/latest?cb=20100430132034
+
+Github repository used for help with Pygame implementations: https://github.com/TimoWilken/flappy-bird-pygame
+
+Pygame clock documentation: http://www.geon.wz.cz/pygame/ref/pygame_time.html
+
+Python documentation regarding classes: https://docs.python.org/2/tutorial/classes.html
+
+"""
 
 #Imports
 import sys, pygame, time, os
@@ -16,7 +38,7 @@ pygame.display.set_caption("Flappy Jayhawk")
 size = width, height = (600, 500)
 screen = pygame.display.set_mode(size)
 
-#Color Types
+#Color Definitions
 black = (0,0,0)
 white = (255,255,255)
 blue = (0, 0, 255)
@@ -26,7 +48,7 @@ red = (255, 0, 0)
 clock = pygame.time.Clock()
 FPS = 15
 
-#Font Sizes
+#Font Definitions and sizes
 smallFont = pygame.font.SysFont("comicsansms", 14)
 medFont = pygame.font.SysFont("comicsansms", 25)
 largeFont = pygame.font.SysFont("comicsansms", 50)
@@ -70,10 +92,11 @@ def start_menu():
     intro = True
 
     images = load_images();
-    #scrolling background declaration
+    #Scrolling background declaration
     back = Background(images['background'], images['background'].get_size(), height)
     
-    while intro:
+    while intro: 
+        # Start menu is being shown
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -84,11 +107,11 @@ def start_menu():
 
         screen.fill((255, 231, 181))
 
-        #draw background
+        #Draw background
         screen.blit(back.image, back.rect)
         screen.blit(back.image, back.rect2)
         screen.blit(back.image, back.rect3)
-        #make background scroll
+        #Make background scroll
         back.scroll()
 
         message_to_screen("Flappy JayHawks",
@@ -109,7 +132,7 @@ def start_menu():
         
 def game_over():
     """
-    Creates the game over screen that users will see when they jayhawk touches a pipe and dies.
+    Creates the game over screen that users will see when they jayhawk touches a pipe, causing the player to lose.
     """
 
     while 1:
@@ -303,8 +326,8 @@ class Background(pygame.sprite.Sprite):
 
     def __init__(self, image, size, windowHeight):
         """Initialise a new Background instance.
-            Arguments:
-            image: The Background image.
+        Arguments:
+        image: The Background image.
         size: the size of the background image.
         windowHeight: used to align the background with the bottom of the window.
         """
@@ -335,14 +358,14 @@ class Background(pygame.sprite.Sprite):
     @property
     def rect(self):
         """Get the background's 1st position, width, and height, as a pygame.Rect.
-            THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
+        """
         return pygame.Rect(self.x, self.y, 25, 25)
 
     @property
     def rect2(self):
         """Get the background's 2nd position, width, and height, as a pygame.Rect.
         This will be the same image repeated at BackgroundWidth pixels after.
-            THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
+        """
         return pygame.Rect(self.x + self.BackgroundWidth, self.y, 25, 25)
 
     @property
@@ -353,21 +376,21 @@ class Background(pygame.sprite.Sprite):
         return pygame.Rect(self.x + self.BackgroundWidth + self.BackgroundWidth, self.y, 25, 25)
 
 def pipe_collisions_top(bird,pipes):
-	"""Takes in top pipes and the bird and returns true if there is a collision"""
+    """Takes in top pipes and the bird and returns true if there is a collision"""
     #---------Notes:--------
     #Screen is (600, 500)
     #Upper right is (600,0)
     #Lower left is (0,500)
     #Lower right is (600 ,500)
     
-    if bird.y < (404 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
+    if bird.y < (504 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
     return bird.colliderect(pipes)
 	
     
 def pipe_collisions_bot(bird,pipes):
- 	"""Takes in bottom pipes and the bird and returns true if there is a collision"""
-    if bird.y > (96 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
+    """Takes in bottom pipes and the bird and returns true if there is a collision"""
+    if bird.y > (146 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
     return bird.colliderect(pipes)
     
@@ -382,10 +405,10 @@ def gameLoop():
     
     images = load_images();
 
-    #scrolling background declaration
+    #Scrolling background declaration
     back = Background(images['background'], images['background'].get_size(), height)
 
-    #scrolling pipe declaration
+    #Array declaration for moving pipes
     pipe = Pipe(images['pipe'], width)
     pipeList = []
     pipeList.append(pipe)
@@ -393,25 +416,31 @@ def gameLoop():
     delayBeforeNextPipe = 286 #(1000 / pygame.time.delay(n)) * 2
     delayBeforeNextPipeIncr = 0;
     
-    #jayhawk
+    #Definition of the jayhawk object and its corresponding rect
     jayhawk = images['jayhawk']
     jayhawk = pygame.transform.scale(jayhawk, (60, 60))
     jayrect = jayhawk.get_rect()
     jayrect = jayrect.move(80, 200)
 
-    #jayhawk speeds
+    #Jayhawk speeds going up and down
     up_speed = -22;
     down_speed = 2;
+    
+    """
+    Counters for up and down movement
+    These counters allow for the changing of speed according to length of movement of the Jayhawk
+    Generates effect of acceleration
+    """
     up_counter = 0;
     down_counter = 0;
     
-    #random pipe declaration for testing
+    #Random pipe declaration for testing
     pip = images['pipe']
     pip = pygame.transform.scale(pip, (50, 100))
     piprect = pip.get_rect()
     piprect = piprect.move(5,0)
 
-    #rect declaration of screen
+    #Rect declaration of screen
     screenrect = screen.get_rect()
     
     while not gameExit:
@@ -422,16 +451,21 @@ def gameLoop():
                 quit()
                 sys.exit
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE:   
+                    # listens for ESCAPE key to close the game
                     gameExit = True
                     pygame.quit()
                     sys.exit
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP: 
+                    # listens for UP ARROW key. Triggers isGoingUp to be True
                     isGoingUp = True
                     
+        """
+        The following IF statement controls the entire movement of the Jayhawk while it's going up.
+        The counter is used to control speed, giving the user a feeling of acceleration.
+        """
         if(isGoingUp):
-            jayrect = jayrect.move(0, (up_speed / 2))
-            #print(up_counter , up_speed)
+            jayrect = jayrect.move(0, (up_speed/2))
             up_counter += 1
             down_counter = 0        
             if(up_counter == 1):
@@ -449,13 +483,15 @@ def gameLoop():
             elif(up_counter > 6):
                 isGoingUp = False
                 up_counter = 0
-                up_speed = -22            
+                up_speed = -22 
+                """
+        The following IF statement controls the entire movement of the Jayhawk while it's going down.
+        The counter is used to control speed, giving the user a feeling of acceleration.
+        """
         else:
-            jayrect = jayrect.move(0, (down_speed)/8)
-            #print(down_counter, down_speed)
+            jayrect = jayrect.move(0, (down_speed)/8)            
             down_counter += 1
-            up_counter = 0
-            
+            up_counter = 0            
             if(down_counter == 1):
                 down_speed = 4            
             elif(down_counter == 2):
@@ -469,28 +505,27 @@ def gameLoop():
             elif(down_counter > 5):
                 down_speed = 22
                 
-        #keeps the jayhawk in screen
+        #Keeps the Jayhawk in screen
         jayrect.clamp_ip(screenrect)     
 
         screen.fill((255, 231, 181))
 
-        #draw background
+        #Draw background
         screen.blit(back.image, back.rect)
         screen.blit(back.image, back.rect2)
         screen.blit(back.image, back.rect3)
-        #make background scroll
+        
+        #Make background scroll
         back.scroll()
-
-		#draw pipe for testing
-        #screen.blit(pip, piprect)        
+        
     
-        #add pipes every 2 seconds
+        #Generates new pipes by appending them to the end of Pipe array
         delayBeforeNextPipeIncr = delayBeforeNextPipeIncr + 1
         if(delayBeforeNextPipeIncr > delayBeforeNextPipe):
             pipe1 = Pipe(images['pipe'], width)
             pipeList.append(pipe1)
             delayBeforeNextPipeIncr = 0
-        #draw pipe
+        #Draw pipe
         for pipeElement in pipeList:
             screen.blit(pipeElement.image_top, pipeElement.rect_top)
             screen.blit(pipeElement.image_bot, pipeElement.rect_bot)
@@ -498,10 +533,10 @@ def gameLoop():
             if(pipeElement.scroll() == False):
                 pipeList.pop(0)
                 
-        #draw jayhawk
+        #Draw Jayhawk
         screen.blit(jayhawk, jayrect)
 
-        #collisions
+        #Implements collisions
         for pipeElement in pipeList:
             botPipeRect = pipeElement.rect_bot
             topPipeRect = pipeElement.rect_top
@@ -512,11 +547,11 @@ def gameLoop():
 
             
         while gameOver == True:
-            #draw background
+            #Draw background
             screen.blit(back.image, back.rect)
             screen.blit(back.image, back.rect2)
             screen.blit(back.image, back.rect3)
-            #make background scroll
+            #Make background scroll
             back.scroll()
             message_to_screen("Game Over",
                             blue,
@@ -540,16 +575,14 @@ def gameLoop():
                         pygame.quit()
                         sys.exit
         
-
+        #Updates screen and implements delay
         pygame.display.update()
         pygame.display.flip()
         pygame.time.delay(7)
 
 def main():
-    """The application's entry point.
-
-    If someone executes this module (instead of importing it, for
-    example), this function is called.
+    """
+    The application's entry point. Calls "start_menu" and "gameLoop" functions
     """
     gameExit = False
     start_menu()
@@ -561,9 +594,10 @@ def main():
     pygame.quit()
     quit()
     sys.exit
-
-
+    
+    
+"""
+Starts application by calling main function
+"""
 if __name__ == '__main__':
-    # If this module had been imported, __name__ would be 'pygame1'.
-    # It was executed (e.g. by double-clicking the file), so call main.
     main()
