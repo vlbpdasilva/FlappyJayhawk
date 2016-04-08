@@ -1,0 +1,138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Background</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Background</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/pberger/EECS_448/FlappyJayhawk/FlappyJayhawk/Background.py">/home/pberger/EECS_448/FlappyJayhawk/FlappyJayhawk/Background.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="pygame.sprite.html#Sprite">pygame.sprite.Sprite</a>(<a href="__builtin__.html#object">__builtin__.object</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Background.html#Background">Background</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Background">class <strong>Background</strong></a>(<a href="pygame.sprite.html#Sprite">pygame.sprite.Sprite</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;background&nbsp;image&nbsp;that&nbsp;will&nbsp;scroll&nbsp;at&nbsp;a&nbsp;relatively&nbsp;slow&nbsp;pace.<br>
+The&nbsp;image&nbsp;will&nbsp;repeat&nbsp;every&nbsp;image&nbsp;width's&nbsp;length&nbsp;apart.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Background.html#Background">Background</a></dd>
+<dd><a href="pygame.sprite.html#Sprite">pygame.sprite.Sprite</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Background-__init__"><strong>__init__</strong></a>(self, image, size, windowHeight)</dt><dd><tt>Initialise&nbsp;a&nbsp;new&nbsp;<a href="#Background">Background</a>&nbsp;instance.<br>
+Arguments:<br>
+image:&nbsp;The&nbsp;<a href="#Background">Background</a>&nbsp;image.<br>
+size:&nbsp;the&nbsp;size&nbsp;of&nbsp;the&nbsp;background&nbsp;image.<br>
+windowHeight:&nbsp;used&nbsp;to&nbsp;align&nbsp;the&nbsp;background&nbsp;with&nbsp;the&nbsp;bottom&nbsp;of&nbsp;the&nbsp;window.</tt></dd></dl>
+
+<dl><dt><a name="Background-scroll"><strong>scroll</strong></a>(self)</dt><dd><tt>Update&nbsp;the&nbsp;<a href="#Background">Background</a>'s&nbsp;position&nbsp;by&nbsp;changing&nbsp;its&nbsp;x-coord&nbsp;by&nbsp;-1.<br>
+Reset&nbsp;position&nbsp;of&nbsp;<a href="#Background">Background</a>&nbsp;image's&nbsp;rects&nbsp;back&nbsp;to&nbsp;0&nbsp;when&nbsp;the&nbsp;first&nbsp;rect&nbsp;is&nbsp;fully&nbsp;offscreen.<br>
+This&nbsp;gives&nbsp;the&nbsp;illusion&nbsp;of&nbsp;infinitely&nbsp;repeating&nbsp;background.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>image</strong></dt>
+<dd><tt>Get&nbsp;a&nbsp;Surface&nbsp;containing&nbsp;the&nbsp;Background's&nbsp;image.</tt></dd>
+</dl>
+<dl><dt><strong>rect</strong></dt>
+<dd><tt>Get&nbsp;the&nbsp;background's&nbsp;1st&nbsp;position,&nbsp;width,&nbsp;and&nbsp;height,&nbsp;as&nbsp;a&nbsp;pygame.Rect.</tt></dd>
+</dl>
+<dl><dt><strong>rect2</strong></dt>
+<dd><tt>Get&nbsp;the&nbsp;background's&nbsp;2nd&nbsp;position,&nbsp;width,&nbsp;and&nbsp;height,&nbsp;as&nbsp;a&nbsp;pygame.Rect.<br>
+This&nbsp;will&nbsp;be&nbsp;the&nbsp;same&nbsp;image&nbsp;repeated&nbsp;at&nbsp;BackgroundWidth&nbsp;pixels&nbsp;after.</tt></dd>
+</dl>
+<dl><dt><strong>rect3</strong></dt>
+<dd><tt>Get&nbsp;the&nbsp;background's&nbsp;3rd&nbsp;position,&nbsp;width,&nbsp;and&nbsp;height,&nbsp;as&nbsp;a&nbsp;pygame.Rect.<br>
+This&nbsp;will&nbsp;be&nbsp;the&nbsp;same&nbsp;image&nbsp;repeated&nbsp;at&nbsp;BackgroundWidth&nbsp;+&nbsp;BackgroundWidth&nbsp;pixels&nbsp;after.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;THE&nbsp;WIDTH&nbsp;AND&nbsp;HEIGHT&nbsp;PARAMETERS&nbsp;DON'T&nbsp;WORK?</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="pygame.sprite.html#Sprite">pygame.sprite.Sprite</a>:<br>
+<dl><dt><a name="Background-__repr__"><strong>__repr__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Background-add"><strong>add</strong></a>(self, *groups)</dt><dd><tt>add&nbsp;the&nbsp;sprite&nbsp;to&nbsp;groups<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-add">add</a>(*groups):&nbsp;return&nbsp;None<br>
+&nbsp;<br>
+Any&nbsp;number&nbsp;of&nbsp;Group&nbsp;instances&nbsp;can&nbsp;be&nbsp;passed&nbsp;as&nbsp;arguments.&nbsp;The&nbsp;<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;will&nbsp;be&nbsp;added&nbsp;to&nbsp;the&nbsp;Groups&nbsp;it&nbsp;is&nbsp;not&nbsp;already&nbsp;a&nbsp;member&nbsp;of.</tt></dd></dl>
+
+<dl><dt><a name="Background-add_internal"><strong>add_internal</strong></a>(self, group)</dt></dl>
+
+<dl><dt><a name="Background-alive"><strong>alive</strong></a>(self)</dt><dd><tt>does&nbsp;the&nbsp;sprite&nbsp;belong&nbsp;to&nbsp;any&nbsp;groups<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-alive">alive</a>():&nbsp;return&nbsp;bool<br>
+&nbsp;<br>
+Returns&nbsp;True&nbsp;when&nbsp;the&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;belongs&nbsp;to&nbsp;one&nbsp;or&nbsp;more&nbsp;Groups.</tt></dd></dl>
+
+<dl><dt><a name="Background-groups"><strong>groups</strong></a>(self)</dt><dd><tt>list&nbsp;of&nbsp;Groups&nbsp;that&nbsp;contain&nbsp;this&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a><br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-groups">groups</a>():&nbsp;return&nbsp;group_list<br>
+&nbsp;<br>
+Return&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;the&nbsp;Groups&nbsp;that&nbsp;contain&nbsp;this&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>.</tt></dd></dl>
+
+<dl><dt><a name="Background-kill"><strong>kill</strong></a>(self)</dt><dd><tt>remove&nbsp;the&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;from&nbsp;all&nbsp;Groups<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-kill">kill</a>():&nbsp;return&nbsp;None<br>
+&nbsp;<br>
+The&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;is&nbsp;removed&nbsp;from&nbsp;all&nbsp;the&nbsp;Groups&nbsp;that&nbsp;contain&nbsp;it.&nbsp;This&nbsp;won't<br>
+change&nbsp;anything&nbsp;about&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>.&nbsp;It&nbsp;is&nbsp;possible&nbsp;to&nbsp;continue<br>
+to&nbsp;use&nbsp;the&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;after&nbsp;this&nbsp;method&nbsp;has&nbsp;been&nbsp;called,&nbsp;including&nbsp;adding&nbsp;it<br>
+to&nbsp;Groups.</tt></dd></dl>
+
+<dl><dt><a name="Background-remove"><strong>remove</strong></a>(self, *groups)</dt><dd><tt>remove&nbsp;the&nbsp;sprite&nbsp;from&nbsp;groups<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-remove">remove</a>(*groups):&nbsp;return&nbsp;None<br>
+&nbsp;<br>
+Any&nbsp;number&nbsp;of&nbsp;Group&nbsp;instances&nbsp;can&nbsp;be&nbsp;passed&nbsp;as&nbsp;arguments.&nbsp;The&nbsp;<a href="pygame.sprite.html#Sprite">Sprite</a>&nbsp;will<br>
+be&nbsp;removed&nbsp;from&nbsp;the&nbsp;Groups&nbsp;it&nbsp;is&nbsp;currently&nbsp;a&nbsp;member&nbsp;of.</tt></dd></dl>
+
+<dl><dt><a name="Background-remove_internal"><strong>remove_internal</strong></a>(self, group)</dt></dl>
+
+<dl><dt><a name="Background-update"><strong>update</strong></a>(self, *args)</dt><dd><tt>method&nbsp;to&nbsp;control&nbsp;sprite&nbsp;behavior<br>
+<a href="pygame.sprite.html#Sprite">Sprite</a>.<a href="#Background-update">update</a>(*args):<br>
+&nbsp;<br>
+The&nbsp;default&nbsp;implementation&nbsp;of&nbsp;this&nbsp;method&nbsp;does&nbsp;nothing;&nbsp;it's&nbsp;just&nbsp;a<br>
+convenient&nbsp;"hook"&nbsp;that&nbsp;you&nbsp;can&nbsp;override.&nbsp;This&nbsp;method&nbsp;is&nbsp;called&nbsp;by<br>
+Group.<a href="#Background-update">update</a>()&nbsp;with&nbsp;whatever&nbsp;arguments&nbsp;you&nbsp;give&nbsp;it.<br>
+&nbsp;<br>
+There&nbsp;is&nbsp;no&nbsp;need&nbsp;to&nbsp;use&nbsp;this&nbsp;method&nbsp;if&nbsp;not&nbsp;using&nbsp;the&nbsp;convenience&nbsp;<br>
+method&nbsp;by&nbsp;the&nbsp;same&nbsp;name&nbsp;in&nbsp;the&nbsp;Group&nbsp;class.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="pygame.sprite.html#Sprite">pygame.sprite.Sprite</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

@@ -1,4 +1,5 @@
- class Background(pygame.sprite.Sprite):
+import pygame
+class Background(pygame.sprite.Sprite):
     """The background image that will scroll at a relatively slow pace.
     The image will repeat every image width's length apart.
     """

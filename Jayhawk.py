@@ -1,3 +1,4 @@
+import pygame
 class Jayhawk(pygame.sprite.Sprite):
     """The Jayhawk that the player will be controlling.
     The Jayhawk will ascend or descend and its main objective is to avoid

@@ -1,4 +1,6 @@
-     
+import pygame
+from random import randint     
+
 class Pipe(pygame.sprite.Sprite):
     """
     x: The bird's X coordinate.

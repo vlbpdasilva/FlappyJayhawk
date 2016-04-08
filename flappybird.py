@@ -27,8 +27,11 @@ Python documentation regarding classes: https://docs.python.org/2/tutorial/class
 """
 
 #Import
-import sys, pygame, time, os, Jayhawk, Pipe, Background
+import sys, pygame, time, os
 from random import randint
+from Jayhawk import *
+from Pipe import *
+from Background import *
 
 #Initialization
 pygame.init()
