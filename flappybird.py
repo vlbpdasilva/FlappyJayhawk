@@ -57,7 +57,7 @@ def load_images():
             }
 
 def start_menu():
-     """Create a start menu that gives the users the title of the game and the creators of the game
+    """Create a start menu that gives the users the title of the game and the creators of the game
     Also gives users the directions to start the game and the directions to play the game.
     Users will stay on the start menu until they press the corresponding key to start the game or press x to exit the game.
     """
@@ -118,7 +118,7 @@ def game_over():
 
 
 def text_objects(text, color, size):
-     """
+    """
     Creates text objects with corresponding sizes. 
     Can expand to a greater range of font size by adding more to this list.
     """
