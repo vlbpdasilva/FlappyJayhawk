@@ -1,3 +1,4 @@
+
 ########
 # MOVE JAYHAWK WITH ARROWS, PRESS SPACEBAR TO QUIT
 # https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
@@ -89,7 +90,7 @@ def start_menu():
                             -20,
                             "small")
         message_to_screen("Press SPACE to play!!",
-                            red,_
+                            red,
                             20,
                             "medium")
 
@@ -167,7 +168,7 @@ class Jayhawk(pygame.sprite.Sprite):
 
     @property
     def image(self):
-        """Get a Surface containing this Jayhawk's image.
+        """Get a Surface containing this bird's image.
         """
         return self.Jayhawk_image
 
@@ -185,10 +186,23 @@ class Jayhawk(pygame.sprite.Sprite):
         return pygame.Rect(self.x, self.y, 25, 25)
     
 class Pipe(pygame.sprite.Sprite):
-    """The pipe is the main obstacle in this game. Pipes will occur as pairs
-    with a top pipe and a bottom pipe. The Jayhawk fly through the middle
-    of these pipes in order to proceed or suffer damage/lose the game.
     """
+    x: The bird's X coordinate.
+    y: The bird's Y coordinate.
+    msec_to_climb: The number of milliseconds left to climb, where a
+        complete climb lasts Bird.CLIMB_DURATION milliseconds.
+    Constants:
+    WIDTH: The width, in pixels, of the bird's image.
+    HEIGHT: The height, in pixels, of the bird's image.
+    SINK_SPEED: With which speed, in pixels per millisecond, the bird
+        descends in one second while not climbing.
+    CLIMB_SPEED: With which speed, in pixels per millisecond, the bird
+        ascends in one second while climbing, on average.  See also the
+        Bird.update docstring.
+    CLIMB_DURATION: The number of milliseconds it takes the bird to
+        execute a complete climb.
+    """
+    
     
     def __init__(self, image, game_window_width):
         """Initialise a new Pipe instance.
@@ -200,7 +214,7 @@ class Pipe(pygame.sprite.Sprite):
         super(Pipe, self).__init__()
         self.x = game_window_width
         self.reset_x = game_window_width
-        self.y = randint(25, 375)
+        self.y = randint(25, 275)
 
         self.Pipe_image_top = image
         self.Pipe_image_top = pygame.transform.rotate(self.Pipe_image_top, 180)
@@ -319,18 +333,18 @@ class Background(pygame.sprite.Sprite):
             THE WIDTH AND HEIGHT PARAMETERS DON'T WORK?"""
         return pygame.Rect(self.x + self.BackgroundWidth + self.BackgroundWidth, self.y, 25, 25)
 
-
 def pipe_collisions_top(bird,pipes):
     #notes
     #Screen is (600, 500)
     #Upper right is (600,0)
     #Lower left is (0,500)
     #Lower right is (600 ,500)
-
-    if bird.y < (504 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
+    
+    if bird.y < (404 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
     
     return bird.colliderect(pipes)
+	
     
 def pipe_collisions_bot(bird,pipes):
  
@@ -398,7 +412,7 @@ def gameLoop():
                     jayrect = jayrect.move(20,0)
                     
         if(isGoingUp):
-            jayrect = jayrect.move(0, (up_speed * 2))
+            jayrect = jayrect.move(0, (up_speed / 3))
             #print(up_counter , up_speed)
             up_counter += 1
             down_counter = 0        
@@ -419,7 +433,7 @@ def gameLoop():
                 up_counter = 0
                 up_speed = -22            
         else:
-            jayrect = jayrect.move(0, down_speed)
+            jayrect = jayrect.move(0, (down_speed)/3)
             #print(down_counter, down_speed)
             down_counter += 1
             up_counter = 0
@@ -509,6 +523,7 @@ def gameLoop():
 
 def main():
     """The application's entry point.
+
     If someone executes this module (instead of importing it, for
     example), this function is called.
     """
@@ -519,7 +534,6 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameExit = True
-                
     pygame.quit()
     quit()
     sys.exit
