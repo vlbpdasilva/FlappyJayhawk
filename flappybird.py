@@ -57,6 +57,10 @@ def load_images():
             }
 
 def start_menu():
+     """Create a start menu that gives the users the title of the game and the creators of the game
+    Also gives users the directions to start the game and the directions to play the game.
+    Users will stay on the start menu until they press the corresponding key to start the game or press x to exit the game.
+    """
     intro = True
 
     images = load_images();
@@ -97,7 +101,9 @@ def start_menu():
         pygame.display.update()
         
 def game_over():
-    
+    """
+    Creates the game over screen that users will see when they jayhawk touches a pipe and dies.
+    """
 
     while 1:
         message_to_screen("Game Over",
@@ -112,6 +118,10 @@ def game_over():
 
 
 def text_objects(text, color, size):
+     """
+    Creates text objects with corresponding sizes. 
+    Can expand to a greater range of font size by adding more to this list.
+    """
     if size == "small":
         textSurface = smallFont.render(text, True, color)
     elif size == "medium":
@@ -121,6 +131,10 @@ def text_objects(text, color, size):
     return textSurface, textSurface.get_rect()
 
 def message_to_screen(msg, color, y_displace=0, size="small"):
+    """
+    Creates the message that is displayed on the screen to users. 
+    Will be centered and msg, color, size can be changed
+    """
     textSurf, textRect = text_objects(msg, color, size)
     textRect.center = ((width/2),(height/2)+y_displace)
     screen.blit(textSurf,textRect)
@@ -354,6 +368,10 @@ def pipe_collisions_bot(bird,pipes):
     return bird.colliderect(pipes)
     
 def gameLoop():
+    """
+    Runs the game loop until users lose by allowing the jayhawk to collide with the pipes.
+    When game over the game will show the game over screen and give the users the option to play again.
+    """
     gameOver = False
     gameExit = False
     isGoingUp = False
