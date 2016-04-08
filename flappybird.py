@@ -302,8 +302,9 @@ def gameLoop():
             elif(down_counter > 5):
                 down_speed = 22
                 
-        #Keeps the Jayhawk in screen
-        jayrect.clamp_ip(screenrect)     
+        #Keeps the Jayhawk in screen for testing
+        #jayrect.clamp_ip(screenrect)
+        
 
         screen.fill((255, 231, 181))
 
