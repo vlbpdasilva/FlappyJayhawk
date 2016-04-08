@@ -4,23 +4,29 @@
 # https://www.youtube.com/playlist?list=PL6gx4Cwl9DGAjkwJocj7vlc_mFU-4wXJq
 #pipe image from http://vignette3.wikia.nocookie.net/fantendo/images/0/06/RocketPipes.png/revision/latest?cb=20100430132034
 
+#Imports
 import sys, pygame, time, os
 from random import randint
 
+#Initialization
 pygame.init()
 
+#Screen Initializations
 pygame.display.set_caption("Flappy Jayhawk")
 size = width, height = (600, 500)
 screen = pygame.display.set_mode(size)
 
+#Color Types
 black = (0,0,0)
 white = (255,255,255)
 blue = (0, 0, 255)
 red = (255, 0, 0)
 
+#Clock Implementation
 clock = pygame.time.Clock()
 FPS = 15
 
+#Font Sizes
 smallFont = pygame.font.SysFont("comicsansms", 14)
 medFont = pygame.font.SysFont("comicsansms", 25)
 largeFont = pygame.font.SysFont("comicsansms", 50)
@@ -237,9 +243,7 @@ class Pipe(pygame.sprite.Sprite):
         
         self.Pipe_image_bot = image
         self.Pipe_mask_bot = pygame.mask.from_surface(self.Pipe_image_bot)
-        
-        #self.Pipe_rect_top = pygame.Rect(self.x, self.y - 504, 25, 25)
-        #self.Pipe_rect_bot = pygame.Rect(self.x, self.y + 100, 25, 25)
+
 
 
     def scroll(self):
@@ -349,7 +353,8 @@ class Background(pygame.sprite.Sprite):
         return pygame.Rect(self.x + self.BackgroundWidth + self.BackgroundWidth, self.y, 25, 25)
 
 def pipe_collisions_top(bird,pipes):
-    #notes
+	"""Takes in top pipes and the bird and returns true if there is a collision"""
+    #---------Notes:--------
     #Screen is (600, 500)
     #Upper right is (600,0)
     #Lower left is (0,500)
@@ -357,13 +362,11 @@ def pipe_collisions_top(bird,pipes):
     
     if bird.y < (404 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
-    
     return bird.colliderect(pipes)
 	
     
 def pipe_collisions_bot(bird,pipes):
- 
-    #if bird.y > (96 + pipes.y) and (bird.x+45 > pipes.x and bird.x-35 < pipes.x):
+ 	"""Takes in bottom pipes and the bird and returns true if there is a collision"""
     if bird.y > (96 + pipes.y) and (bird.x+30 > pipes.x and bird.x-30 < pipes.x):
         return True
     return bird.colliderect(pipes)
@@ -383,7 +386,7 @@ def gameLoop():
     back = Background(images['background'], images['background'].get_size(), height)
 
     #scrolling pipe declaration
-    pipe = Pipe(images['pipe'], width)    #piperect = pipe.rect #this is updated by calling scroll and then calling pipe's rect property
+    pipe = Pipe(images['pipe'], width)
     pipeList = []
     pipeList.append(pipe)
     #add pipes every 2 seconds
@@ -477,7 +480,8 @@ def gameLoop():
         screen.blit(back.image, back.rect3)
         #make background scroll
         back.scroll()
-    #draw pipe for testing
+
+		#draw pipe for testing
         #screen.blit(pip, piprect)        
     
         #add pipes every 2 seconds
