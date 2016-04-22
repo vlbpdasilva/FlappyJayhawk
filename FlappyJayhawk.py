@@ -45,7 +45,7 @@ red = (255, 0, 0)
 
 #Clock Implementation
 clock = pygame.time.Clock()
-FPS = 15
+FPS = 120
 
 #Font Definitions and sizes
 smallFont = pygame.font.SysFont("comicsansms", 14)
@@ -380,7 +380,8 @@ def gameLoop():
         #Updates screen and implements delay
         pygame.display.update()
         pygame.display.flip()
-        pygame.time.delay(7)
+        #pygame.time.delay(7)
+        clock.tick(FPS)
 
 def main():
     """
