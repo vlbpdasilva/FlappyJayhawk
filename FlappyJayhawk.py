@@ -210,10 +210,11 @@ def gameLoop():
     delayBeforeNextPipeIncr = 0;
     
     #Definition of the jayhawk object and its corresponding rect
-    jayhawk = images['jayhawk']
-    jayhawk = pygame.transform.scale(jayhawk, (60, 60))
-    jayrect = jayhawk.get_rect()
-    jayrect = jayrect.move(80, 200)
+    #jayhawk = images['jayhawk']
+    #jayhawk = pygame.transform.scale(jayhawk, (60, 60))
+    #jayrect = jayhawk.get_rect()
+    #jayrect = jayrect.move(80, 200)
+    jayhawk = Jayhawk(80,200,(60,60),images['jayhawk'])
 
     #Jayhawk speeds going up and down
     up_speed = -22;
@@ -251,12 +252,14 @@ def gameLoop():
                     sys.exit
                 if event.key == pygame.K_UP: 
                     # listens for UP ARROW key. Triggers isGoingUp to be True
-                    isGoingUp = True
+                    #isGoingUp = True
+                    #up_counter = 0
+                    jayhawk.jump()
                     
         """
         The following IF statement controls the entire movement of the Jayhawk while it's going up.
         The counter is used to control speed, giving the user a feeling of acceleration.
-        """
+        
         if(isGoingUp):
             jayrect = jayrect.move(0, (up_speed/2))
             up_counter += 1
@@ -277,10 +280,10 @@ def gameLoop():
                 isGoingUp = False
                 up_counter = 0
                 up_speed = -22 
-                """
+                
         The following IF statement controls the entire movement of the Jayhawk while it's going down.
         The counter is used to control speed, giving the user a feeling of acceleration.
-        """
+        
         else:
             jayrect = jayrect.move(0, (down_speed)/8)            
             down_counter += 1
@@ -296,10 +299,12 @@ def gameLoop():
             elif(down_counter == 5):
                 down_speed = 16            
             elif(down_counter > 5):
-                down_speed = 22
+                down_speed = 22"""
+        jayhawk.updatePosition()
                 
         #Keeps the Jayhawk in screen for testing
-        jayrect.clamp_ip(screenrect)
+        #jayrect.clamp_ip(screenrect)
+        jayhawk.clamp()
         
 
         screen.fill((255, 231, 181))
@@ -328,15 +333,18 @@ def gameLoop():
                 pipeList.pop(0)
                 
         #Draw Jayhawk
-        screen.blit(jayhawk, jayrect)
+        #screen.blit(jayhawk, jayrect)
+        screen.blit(jayhawk.image, jayhawk.rect)
 
         #Implements collisions
         for pipeElement in pipeList:
             botPipeRect = pipeElement.rect_bot
             topPipeRect = pipeElement.rect_top
-            if (pipe_collisions_top(jayrect,topPipeRect)):
+            #if (pipe_collisions_top(jayrect,topPipeRect)):
+            if (pipe_collisions_top(jayhawk.rect,topPipeRect)):
                 gameOver = True
-            if (pipe_collisions_bot(jayrect,botPipeRect)):
+            #if (pipe_collisions_bot(jayrect,botPipeRect)):
+            if (pipe_collisions_bot(jayhawk.rect,botPipeRect)):   
                 gameOver = True
 
             
